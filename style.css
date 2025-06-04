@@ -1,0 +1,100 @@
+@import url('https://fonts.cdnfonts.com/css/samsungone');
+
+body {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+    height: 100vh;
+    flex-direction: column;
+    font-family: 'SamsungOne', sans-serif;
+    background-color: gray;                                            
+}
+
+.container {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+}
+
+.container-calculator {
+    border-radius: 4%;
+    padding: 32px 16px;
+    max-width: 312px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    background-color: #e2e2e2;
+}
+
+.display {
+    height: 64px;
+    padding: 14px;
+    font-size: 32px;
+    font-weight: 500;
+    display: flex;
+    justify-content: flex-end;
+    align-items: end;
+    background-color: rgba(118, 130, 110, 0.891);
+    font-family: 'SamsungOne', sans-serif;
+}
+
+.first-row {
+    margin-bottom: 8px;
+    display: flex;
+    gap: 8px;
+    justify-content: space-between;
+    font-family: 'SamsungOne', sans-serif;
+}
+
+.other-rows {
+    margin-top: 8px;
+    display: flex;
+    gap: 8px;
+    font-family: 'SamsungOne', sans-serif;
+}
+
+button {
+    font-family: 'SamsungOne', sans-serif;
+    width: 64px;
+    height: 64px;
+    font-size: 24px;
+    border-radius: 50%;
+    border: none;
+    transition: transform 0.1s ease, box-shadow 0.1s ease;
+}
+
+button:active {
+    transform: scale(0.95);
+    box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
+}
+
+.pressed {
+    transform: scale(0.95);
+    box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
+}
+
+#clear, .operator, #delete {
+    background-color: #cdcdce;
+}
+
+.operator, #delete {
+    color: #52a401;
+}
+
+#clear {
+    color: #af3b3b;
+}
+
+.numeric, #decimal {
+    color: #474749;
+    background-color: #fcfcfe;
+}
+
+#equals {
+    color: white;
+    background-color: #52a401;
+}
