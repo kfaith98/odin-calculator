@@ -4,6 +4,7 @@ let result = '';
 let shouldResetDisplay = false;
 let hasError = false;
 let lastInputWasOperator = false;
+const MAX_DISPLAY_LENGTH = 12;
 
 function add(a, b) {
     return a + b;
@@ -42,10 +43,23 @@ function operate(firstNumber, operand, secondNumber) {
     }
 
     if (typeof answer === "number") {
-        return Number.parseFloat(answer).toFixed(5); // update later
-    }
-    else {
-        return answer;
+        if (!isFinite(answer)) return "ERROR";
+
+        let formatted;
+
+        if (Number.isInteger(answer)) {
+            formatted = answer.toString();
+        } else {
+            formatted = parseFloat(answer.toFixed(5)).toString();
+        }
+
+        if (formatted.length > MAX_DISPLAY_LENGTH) {
+            formatted = formatted.slice(0, MAX_DISPLAY_LENGTH);
+        }
+
+        return formatted;
+    } else {
+        return "ERROR";
     }
 }
 
@@ -68,12 +82,14 @@ function numberInput() {
             display.textContent = '';
             shouldResetDisplay = false;
         }
+        lastInputWasOperator = false;
 
         if (hasError) {
             display.textContent = '';
             hasError = false;
         }
 
+        if (display.textContent.length >= MAX_DISPLAY_LENGTH) return;
         display.append(button.textContent);
         });
     });
@@ -96,6 +112,8 @@ function operatorInput() {
     operatorKeys.forEach(button => {     
         button.addEventListener('click', () => {
             const display = document.querySelector(".display");
+
+            if (hasError) return;
 
             if (lastInputWasOperator) {
                 display.textContent = "INVALID";
@@ -128,7 +146,7 @@ function calculateOperation() {
         const display = document.querySelector(".display");
         const current = display.textContent;
 
-        if (hasError || firstNumber === '' || operator === '' || current === firstNumber) {
+        if (hasError || firstNumber === '' || operator === '') {
             display.textContent = "INVALID";
             hasError = true;
             shouldResetDisplay = true;
@@ -146,6 +164,7 @@ function calculateOperation() {
 
         result = operate(firstNumber, operator, secondNumber);
         display.textContent = result;
+        lastInputWasOperator = false;
 
         if (result === "ERROR") {
             hasError = true;
@@ -196,6 +215,7 @@ document.addEventListener('keydown', (event) => {
             display.textContent = '';
             shouldResetDisplay = false;
         }
+        if (display.textContent.length >= MAX_DISPLAY_LENGTH) return;
         display.append(key);
         lastInputWasOperator = false;
     }
